@@ -1,0 +1,57 @@
+{
+  "extends": [
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "rules": {
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-var-requires": "off",
+    "@typescript-eslint/ban-ts-comment": "off",
+    "@typescript-eslint/ban-types": [
+      "error",
+      {
+        "types": {
+          // add a custom message to help explain why not to use it
+          "Function": false,
+          "{}": false
+        }
+      }
+    ],
+    "@typescript-eslint/no-use-before-define": [
+      "error",
+      {
+        "functions": false,
+        "variables": false
+      }
+    ],
+    "no-empty-function": "off",
+    "@typescript-eslint/no-empty-function": ["warn"],
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "no-unused-vars": [
+      "error",
+      // we are only using this rule to check for unused arguments since TS
+      // catches unused variables but not args.
+      { "varsIgnorePattern": ".*", "args": "none" }
+    ],
+    "no-restricted-syntax": ["error"]
+  },
+  "overrides": [
+    {
+      "files": ["**/__tests__/**", "test-dts/**"],
+      "rules": {
+        "no-restricted-globals": "off",
+        "no-restricted-syntax": "off"
+      }
+    }
+  ],
+  "env": {
+    "node": true
+  },
+  "globals": {
+    "getApp": "readonly",
+    "App": "readonly",
+    "Page": "readonly",
+    "Component": "readonly"
+  },
+  "parser": "@typescript-eslint/parser"
+}

@@ -1,0 +1,4 @@
+packages/**/lib
+packages/**/test/fixtures
+packages/**/dist
+coverage
