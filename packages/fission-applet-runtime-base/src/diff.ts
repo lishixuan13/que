@@ -71,14 +71,3 @@ export function diff(newData: object, oldData: object): object | string {
   }
   return flag ? res : SKIP
 }
-
-export function diffPath(newData: object, oldData: object): object | string {
-  const res = {}
-  let flag = false
-  for (const k in newData) {
-    if (patch(newData[k], oldData[k], k, res)) {
-      flag = true
-    }
-  }
-  return flag ? res : SKIP
-}

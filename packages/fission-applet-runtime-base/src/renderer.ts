@@ -240,3 +240,9 @@ export function unmount(nativeInstance: any) {
   clearRefIdValue(instance)
   unloadInstance(instance)
 }
+
+let a = 1
+
+function handleClick() {
+  a++
+}

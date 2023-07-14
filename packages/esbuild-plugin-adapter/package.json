@@ -1,5 +1,5 @@
 {
-  "name": "@roundjs/fission-applet-runtime-base",
+  "name": "@roundjs/esbuild-plugin-adapter",
   "version": "0.0.1",
   "license": "MIT",
   "author": "13",
@@ -30,7 +30,5 @@
     "build-types": "tsc -p . --emitDeclarationOnly --outDir temp && api-extractor run && rimraf temp",
     "prepublishOnly": "npm run build"
   },
-  "dependencies": {
-    "@vue/reactivity": "^3.3.4"
-  }
+  "dependencies": {}
 }
