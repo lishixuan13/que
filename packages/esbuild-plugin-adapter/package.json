@@ -3,6 +3,14 @@
   "version": "0.0.1",
   "license": "MIT",
   "author": "13",
+  "description": "Add skipSelf/transform and other functions to the esbuild plugin",
+  "keywords": [
+    "esbuild",
+    "plugin",
+    "transform",
+    "skip",
+    "adapter"
+  ],
   "files": [
     "dist"
   ],
@@ -30,5 +38,17 @@
     "build-types": "tsc -p . --emitDeclarationOnly --outDir temp && api-extractor run && rimraf temp",
     "prepublishOnly": "pnpm run build"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lishixuan13/que.git",
+    "directory": "packages/esbuild-plugin-adapter"
+  },
+  "bugs": {
+    "url": "https://github.com/lishixuan13/que/issues"
+  },
+  "homepage": "https://github.com/lishixuan13/que/tree/main/packages/esbuild-plugin-adapter",
+  "publishConfig": {
+    "access": "public"
+  }
 }
