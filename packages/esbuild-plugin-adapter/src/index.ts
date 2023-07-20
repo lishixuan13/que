@@ -1,8 +1,6 @@
 import type {
   PluginBuild as EsbuildPluginBuild,
   Plugin as EsbuildPlugin,
-  OnLoadArgs,
-  OnLoadResult,
 } from 'esbuild'
 import type {
   PluginBuild,
@@ -11,16 +9,20 @@ import type {
   OnTransformArgs,
   OnTransformResult,
   ResolveOptions,
+  OnLoadResult,
+  OnTransformLoadArgs,
 } from './types'
 
 export { EsbuildPluginBuild }
 export {
   PluginBuild,
+  ResolveOptions,
+  OnLoadResult,
   OnTransformResult,
   OnTransformArgs,
+  OnTransformLoadArgs,
   OnTransformOptions,
   Plugin,
-  ResolveOptions,
 }
 
 interface TransformRegister {
@@ -70,9 +72,15 @@ function createBuildContext(
   }
 
   function transform(
-    onLoadArgs: OnLoadArgs,
-    onLoadResult: OnLoadResult
+    _onLoadArgs: OnTransformLoadArgs,
+    _onLoadResult: OnLoadResult
   ): Promise<OnTransformResult> {
+    const onLoadResult = Object.assign({}, _onLoadResult)
+    const onLoadArgs = Object.assign({ virtualPath: void 0 }, _onLoadArgs)
+    if (typeof onLoadResult.virtualPath === 'string') {
+      onLoadArgs.virtualPath = onLoadResult.virtualPath
+    }
+    delete onLoadResult.virtualPath
     return hookReduceTransformRegisters(
       onLoadResult,
       onLoadArgs,
@@ -123,19 +131,21 @@ export function createAdapterPlugins(plugins: Plugin[]): EsbuildPlugin[] {
 }
 
 function hookReduceTransformRegisters(
-  args: OnTransformArgs,
-  onLoadArgs: OnLoadArgs,
+  onLoadResult: OnTransformResult,
+  onLoadArgs: OnTransformLoadArgs,
   reduce: (
-    reduction: OnTransformArgs,
+    reduction: OnTransformResult,
     result: OnTransformResult,
     plugin: TransformRegister
-  ) => OnTransformArgs,
+  ) => OnTransformResult,
   registers: TransformRegister[]
 ): Promise<OnTransformResult> {
-  let promise = Promise.resolve(args)
+  let promise = Promise.resolve(onLoadResult)
   for (const register of registers) {
     if (
-      register.options?.filter.test(onLoadArgs.path) &&
+      (onLoadArgs.virtualPath
+        ? register.options?.filter.test(onLoadArgs.virtualPath)
+        : register.options?.filter.test(onLoadArgs.path)) &&
       (register?.options.namespace
         ? register?.options.namespace === onLoadArgs.namespace
         : true)
@@ -151,7 +161,7 @@ function hookReduceTransformRegisters(
 }
 
 const unfulfilledActions = new Set()
-
+// copy rollup utils/PluginDriver
 function runHook(parameters: unknown[], register: TransformRegister) {
   const handler = register.callback
   let action: [string, string, Parameters<any>] | null = null

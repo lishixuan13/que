@@ -2,8 +2,9 @@ import {
   PluginBuild as EsbuildPluginBuild,
   ResolveOptions as EsbuildResolveOptions,
   ResolveResult,
-  OnLoadResult,
+  OnLoadResult as EsbuildOnLoadResult,
   OnLoadArgs,
+  OnLoadOptions,
 } from 'esbuild'
 
 export interface ResolveOptions extends EsbuildResolveOptions {
@@ -18,10 +19,18 @@ export interface OnTransformOptions {
 }
 
 /** Documentation: https://esbuild.github.io/plugins/#on-load-arguments */
-export type OnTransformArgs = OnLoadResult
+export type OnTransformArgs = EsbuildOnLoadResult
+
+export interface OnTransformLoadArgs extends OnLoadArgs {
+  virtualPath?: string
+}
 
 /** Documentation: https://esbuild.github.io/plugins/#on-load-results */
-export type OnTransformResult = OnLoadResult
+export type OnTransformResult = EsbuildOnLoadResult
+
+export interface OnLoadResult extends EsbuildOnLoadResult {
+  virtualPath?: string
+}
 
 export interface PluginBuild
   extends Pick<
@@ -30,17 +39,26 @@ export interface PluginBuild
     | 'onStart'
     | 'onEnd'
     | 'onResolve'
-    | 'onLoad'
     | 'onDispose'
     | 'esbuild'
   > {
   /** Documentation: https://esbuild.github.io/plugins/#resolve */
   resolve(path: string, options?: ResolveOptions): Promise<ResolveResult>
+  onLoad(
+    options: OnLoadOptions,
+    callback: (
+      args: OnLoadArgs
+    ) =>
+      | OnLoadResult
+      | null
+      | undefined
+      | Promise<OnLoadResult | null | undefined>
+  ): void
   onTransform(
     options: OnTransformOptions,
     callback: (
       args: OnTransformArgs,
-      onLoadArgs: OnLoadArgs
+      onLoadArgs: OnTransformLoadArgs
     ) =>
       | OnTransformResult
       | null
