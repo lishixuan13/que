@@ -1,5 +1,5 @@
 {
-  "name": "@roundjs/esbuild-plugin-adapter",
+  "name": "@quejs/esbuild-plugin-adapter",
   "version": "0.0.1",
   "license": "MIT",
   "author": "13",

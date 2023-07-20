@@ -14,7 +14,7 @@
 
 ```javascript
 import { build } from "esbuild";
-import { createAdapterPlugins } from "@roundjs/esbuild-plugin-adapter";
+import { createAdapterPlugins } from "@quejs/esbuild-plugin-adapter";
 
 build({
   plugins: createAdapterPlugins([
@@ -57,7 +57,7 @@ build({
 
 ```javascript
 import { build } from "esbuild";
-import { createAdapterPlugins } from "@roundjs/esbuild-plugin-adapter";
+import { createAdapterPlugins } from "@quejs/esbuild-plugin-adapter";
 
 build({
   plugins: createAdapterPlugins([
