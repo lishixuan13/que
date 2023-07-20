@@ -28,7 +28,7 @@
     "build-bundle": "esbuild src/index.ts --bundle --platform=node --target=node12 --outfile=dist/index.js",
     "build-bundle-esm": "esbuild src/index.ts --bundle --tree-shaking=true --format=esm --platform=node --target=node12 --outfile=dist/esm.js",
     "build-types": "tsc -p . --emitDeclarationOnly --outDir temp && api-extractor run && rimraf temp",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "pnpm run build"
   },
   "dependencies": {}
 }
