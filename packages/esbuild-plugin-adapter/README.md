@@ -11,7 +11,7 @@
 </h4>
 </div>
 
-## 介绍
+## Introduction
 
 The `esbuild plugin` adapter enables the `plugin` of `esbuild` to support the following capabilities:
 

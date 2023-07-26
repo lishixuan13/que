@@ -1,6 +1,6 @@
 {
   "name": "@quejs/esbuild-plugin-adapter",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "license": "MIT",
   "author": "13",
   "description": "Add skipSelf/transform and other functions to the esbuild plugin",
