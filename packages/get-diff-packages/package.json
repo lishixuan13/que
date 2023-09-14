@@ -1,0 +1,58 @@
+{
+  "name": "@quejs/get-diff-pages",
+  "version": "0.0.1",
+  "license": "MIT",
+  "author": "13",
+  "description": "Obtain packages with changes in Monorepo",
+  "keywords": [
+    "Monorepo",
+    "packages",
+    "workspace",
+    "diff"
+  ],
+  "files": [
+    "dist"
+  ],
+  "main": "dist/index.js",
+  "module": "dist/esm.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "node": "./dist/esm.js",
+        "default": "./dist/esm.js"
+      },
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "dev": "rimraf dist && run-p dev-types dev-watch dev-watch-esm",
+    "dev-types": "tsc -p . -w --incremental --emitDeclarationOnly",
+    "dev-watch": "esbuild src/index.ts --watch --bundle --platform=node --target=node12 --outfile=dist/index.js",
+    "dev-watch-esm": "esbuild src/index.ts --watch --format=esm --bundle --platform=node --target=node12 --outfile=dist/esm.js",
+    "build": "rimraf dist && run-s build-bundle build-bundle-esm build-types",
+    "build-bundle": "esbuild src/index.ts --bundle --external:execa --external:@manypkg/get-packages --external:contains-path --platform=node --target=node12 --outfile=dist/index.js",
+    "build-bundle-esm": "esbuild src/index.ts --bundle --external:execa --external:@manypkg/get-packages --external:contains-path --tree-shaking=true --format=esm --platform=node --target=node12 --outfile=dist/esm.js",
+    "build-types": "tsc -p . --emitDeclarationOnly --outDir temp && api-extractor run && rimraf temp",
+    "prepublishOnly": "pnpm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lishixuan13/que.git",
+    "directory": "packages/get-diff-packages"
+  },
+  "bugs": {
+    "url": "https://github.com/lishixuan13/que/issues"
+  },
+  "homepage": "https://github.com/lishixuan13/que/tree/main/packages/get-diff-packages",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@manypkg/find-root": "^2.2.1",
+    "@manypkg/get-packages": "^2.2.0",
+    "contains-path": "^1.0.0",
+    "execa": "^7.2.0"
+  }
+}

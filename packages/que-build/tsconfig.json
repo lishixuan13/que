@@ -1,7 +1,10 @@
 {
+  "include": ["src", "env.d.ts"],
+  "exclude": ["**/*.spec.ts"],
   "compilerOptions": {
     "outDir": "dist",
     "target": "ES2019",
+    "module": "ES2020",
     "moduleResolution": "node",
     "declaration": true,
     "sourceMap": true,
@@ -9,10 +12,9 @@
     "noUnusedLocals": true,
     "esModuleInterop": true,
     "baseUrl": ".",
-    "jsx": "preserve",
-    "lib": ["esnext", "dom"],
-    "types": ["jest", "node", "bun-types"],
-    "paths": {}
-  },
-  "include": ["global.d.ts", "packages/*/src", "packages/*/__tests__"],
+    "types": ["bun-types"],
+    "paths": {
+      "@quejs/esbuild-plugin-adapter": ["../esbuild-plugin-adapter"]
+    }
+  }
 }

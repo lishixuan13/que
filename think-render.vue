@@ -81,7 +81,7 @@
 // 3 props
 // 4 ref
 // 5 指令
-function render($ctx, { $each }) {
+function render($ctx, { $each }, preRes) {
   const res = {
     a1: $ctx.mainTitle,
     a2: $ctx.subTitle,
@@ -90,11 +90,12 @@ function render($ctx, { $each }) {
     a4: $ctx.visible,
   }
 
-  if (res.a4) {
+  if (preRes.a4 != res.a4) {
     Object.assign(res, {
       a5: $each($ctx.tabs, (item, index) => ({
         a1: 'preferenceContent_' + item.name,
         a2: index,
+        v1: index,
         a3: [
           'ptp_exposure_batch',
           'batch-apply-tab',
