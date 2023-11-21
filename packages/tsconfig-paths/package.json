@@ -1,6 +1,6 @@
 {
-  "name": "@quejs/get-diff-pages",
-  "version": "0.0.5",
+  "name": "@quejs/tsconfig-paths",
+  "version": "0.0.1",
   "license": "MIT",
   "author": "13",
   "description": "Obtain packages with changes in Monorepo",
@@ -32,8 +32,8 @@
     "dev-watch": "esbuild src/index.ts --watch --bundle --platform=node --target=node12 --outfile=dist/index.js",
     "dev-watch-esm": "esbuild src/index.ts --watch --format=esm --bundle --platform=node --target=node12 --outfile=dist/esm.js",
     "build": "rimraf dist && run-s build-bundle build-bundle-esm build-types",
-    "build-bundle": "esbuild src/index.ts --bundle --external:execa --external:@manypkg/get-packages --external:@manypkg/find-root --external:contains-path --platform=node --target=node12 --outfile=dist/index.js",
-    "build-bundle-esm": "esbuild src/index.ts --bundle --external:execa --external:@manypkg/get-packages --external:@manypkg/find-root --external:contains-path --tree-shaking=true --format=esm --platform=node --target=node12 --outfile=dist/esm.js",
+    "build-bundle": "esbuild src/index.ts --bundle --external:tsconfig-paths --platform=node --target=node12 --outfile=dist/index.js",
+    "build-bundle-esm": "esbuild src/index.ts --bundle --external:tsconfig-paths --tree-shaking=true --format=esm --platform=node --target=node12 --outfile=dist/esm.js",
     "build-types": "tsc -p . --emitDeclarationOnly --outDir temp && api-extractor run && rimraf temp",
     "prepublishOnly": "pnpm run build"
   },
@@ -50,9 +50,6 @@
     "access": "public"
   },
   "dependencies": {
-    "@manypkg/find-root": "^2.2.1",
-    "@manypkg/get-packages": "^2.2.0",
-    "contains-path": "^1.0.0",
-    "execa": "^4.0.2"
+    "tsconfig-paths": "^4.2.0"
   }
 }

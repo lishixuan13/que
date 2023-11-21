@@ -1,7 +1,7 @@
 import { join } from 'node:path'
 import { getPackages, Package } from '@manypkg/get-packages'
 import { findRoot } from '@manypkg/find-root'
-import { execa } from 'execa'
+import execa from 'execa'
 import containsPath from 'contains-path'
 
 export function getCurrentDependencies(dir: string) {
@@ -20,14 +20,14 @@ export function getCurrentDependencies(dir: string) {
       return {
         rootPackage: res.rootPackage,
         rootDir: res.rootDir,
-        currentPackages: currentPackage,
+        currentPackage: currentPackage,
         depPackages: Array.from(depMonoPackages),
         tool: res.tool,
       }
     })
 }
 
-export function getMonoPkgDependencies(
+function getMonoPkgDependencies(
   pkg: Package,
   map: Map<string, Package>,
   s = new Set<Package>()
@@ -83,9 +83,3 @@ export async function getCommitDiffPackages(
   )
   return diffPages
 }
-
-getCurrentDependencies(
-  '/Users/edy/Desktop/project/alipay_applet/packages/hooks'
-).then((res) => {
-  console.log(res)
-})
